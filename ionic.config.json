@@ -1,0 +1,7 @@
+{
+  "name": "driveease-back-office",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
