@@ -1,2 +1,38 @@
-// For information on how to create your own theme, please refer to:
-// https://ionicframework.com/docs/theming/
+/*
+ * ParkEase Executive — design tokens exposed as CSS custom properties.
+ * Tailwind's tailwind.config in index.html owns the build-time tokens;
+ * this file exists so non-Tailwind contexts (dynamic styles, charts) can
+ * reach the same palette via var(--pe-token-name).
+ */
+
+:root {
+  --pe-bg: #f5f5f3;
+  --pe-surface: #ffffff;
+  --pe-surface-container-low: #f0f3ff;
+
+  --pe-primary: #0b1b2b;
+  --pe-on-primary: #ffffff;
+  --pe-secondary: #0043eb;
+  --pe-tertiary: #7c3aed;
+
+  --pe-on-surface: #151c27;
+  --pe-on-surface-variant: #44474c;
+  --pe-outline: #74777d;
+  --pe-outline-variant: #e2e4e9;
+
+  --pe-success: #16a34a;
+  --pe-warning: #eab308;
+  --pe-danger: #ef4444;
+  --pe-info: #0043eb;
+  --pe-orange: #ea580c;
+  --pe-purple: #7c3aed;
+
+  --pe-radius-sm: 0.25rem;
+  --pe-radius: 0.5rem;
+  --pe-radius-md: 0.75rem;
+  --pe-radius-lg: 1rem;
+  --pe-radius-xl: 1.5rem;
+
+  --pe-shadow-card: 0 2px 8px rgba(11, 27, 43, 0.06);
+  --pe-shadow-overlay: 0 12px 24px rgba(11, 27, 43, 0.12);
+}
