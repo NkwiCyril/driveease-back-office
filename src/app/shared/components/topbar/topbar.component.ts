@@ -9,9 +9,18 @@ import { IconComponent } from '../icon/icon.component';
   imports: [IconComponent, RouterLink],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <header class="top-0 sticky bg-surface border-b border-outline-variant flex justify-between items-center h-16 px-container_padding z-10">
+    <!-- Pinned to the top of the viewport so it spans the full width, including
+         above the sidebar. z-30 sits above the sidebar (z-20) so the brand
+         strip on the far left is always the topbar's. -->
+    <header class="fixed top-0 left-0 right-0 bg-surface border-b border-outline-variant flex justify-between items-center h-16 px-container_padding z-30">
       <div class="flex items-center gap-gutter">
-        <h1 class="text-h3 font-h3 font-bold text-primary">ParkEase Admin</h1>
+        <!-- Brand block sits in the left strip; the 208px width matches the sidebar
+             (240px) minus the topbar's 32px container_padding, so the right edge of
+             the brand block aligns with the sidebar's right border below it. -->
+        <div class="w-[208px] flex items-baseline gap-2 shrink-0">
+          <h1 class="text-h2 font-h2 font-bold text-primary">ParkEase</h1>
+          <span class="font-body-sm text-body-sm text-on-surface-variant hidden sm:inline">Admin</span>
+        </div>
         <div class="relative hidden md:block">
           <pe-icon name="search" [size]="20" class="absolute left-3 top-1/2 -translate-y-1/2 text-outline pointer-events-none" />
           <input
@@ -23,9 +32,6 @@ import { IconComponent } from '../icon/icon.component';
       </div>
 
       <div class="flex items-center gap-stack_md">
-        <button aria-label="Notifications" class="p-2 text-on-surface-variant hover:bg-surface-container-low transition-colors rounded-full">
-          <pe-icon name="notifications" [size]="22" />
-        </button>
         <a
           routerLink="/admin/profile"
           class="flex items-center gap-3 cursor-pointer p-1 pr-3 rounded-full hover:bg-surface-container-low transition-colors border-[1.5px] border-outline-variant bg-surface-container-lowest"

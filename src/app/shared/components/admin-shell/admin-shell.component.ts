@@ -9,16 +9,19 @@ import { TopbarComponent } from '../topbar/topbar.component';
   imports: [RouterOutlet, SidebarComponent, TopbarComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div class="flex min-h-screen bg-background">
+    <!--
+      Topbar is fixed across the full viewport width (above the sidebar).
+      Sidebar starts at top-16 so it doesn't slide under the topbar.
+      Main content needs both pt-16 (for the topbar) and ml-[240px] (for the sidebar).
+    -->
+    <div class="min-h-screen bg-background">
+      <pe-topbar />
       <pe-sidebar />
-      <div class="flex-1 flex flex-col ml-[240px] min-h-screen">
-        <pe-topbar />
-        <main class="flex-1 p-container_padding overflow-y-auto">
-          <div class="max-w-[1440px] mx-auto">
-            <router-outlet />
-          </div>
-        </main>
-      </div>
+      <main class="ml-[240px] pt-16 min-h-screen">
+        <div class="max-w-[1440px] mx-auto p-container_padding">
+          <router-outlet />
+        </div>
+      </main>
     </div>
   `,
 })

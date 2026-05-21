@@ -14,12 +14,9 @@ interface NavItem {
   imports: [RouterLink, RouterLinkActive, IconComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <aside class="w-[sidebar_width] h-screen border-r border-outline-variant bg-surface-container-lowest flex flex-col py-base z-20 shrink-0 fixed left-0 top-0">
-      <div class="px-container_padding py-stack_md mb-stack_lg">
-        <h2 class="text-h2 font-h2 text-primary">ParkEase</h2>
-        <p class="font-body-sm text-body-sm text-on-surface-variant">Car Marketplace Admin</p>
-      </div>
-
+    <!-- Sits beneath the fixed topbar (which owns the brand block), so this
+         starts at top-16 and its height is the remaining viewport. -->
+    <aside class="w-[sidebar_width] border-r border-outline-variant bg-surface-container-lowest flex flex-col py-stack_md z-20 shrink-0 fixed left-0 top-16 bottom-0">
       <nav class="flex-1 overflow-y-auto px-2">
         <ul class="flex flex-col gap-1">
           @for (item of nav; track item.path) {
