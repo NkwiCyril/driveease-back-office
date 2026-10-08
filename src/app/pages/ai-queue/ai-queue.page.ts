@@ -45,7 +45,7 @@ import { ImgComponent } from '../../shared/components/img/img.component';
             </div>
           </div>
           <div class="p-stack_md border-t border-outline-variant bg-surface-container-lowest flex flex-wrap gap-2 justify-end">
-            <a [routerLink]="['/cars', car._id]" class="h-9 px-4 rounded border-[1.5px] border-outline-variant text-primary font-label-md text-label-md hover:bg-surface-container-low transition-colors inline-flex items-center gap-1">
+            <a [routerLink]="['/cars', car._id]" [state]="{ car }" class="h-9 px-4 rounded border-[1.5px] border-outline-variant text-primary font-label-md text-label-md hover:bg-surface-container-low transition-colors inline-flex items-center gap-1">
               <pe-icon name="open_in_new" [size]="16" /> Inspect
             </a>
             <button (click)="approve(car)" class="h-9 px-4 rounded text-white font-label-md text-label-md hover:opacity-90 transition-opacity inline-flex items-center gap-1" style="background:#16a34a">

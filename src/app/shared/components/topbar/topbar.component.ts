@@ -9,18 +9,19 @@ import { IconComponent } from '../icon/icon.component';
   imports: [IconComponent, RouterLink],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <!-- Pinned to the top of the viewport so it spans the full width, including
-         above the sidebar. z-30 sits above the sidebar (z-20) so the brand
-         strip on the far left is always the topbar's. -->
-    <header class="fixed top-0 left-0 right-0 bg-surface border-b border-outline-variant flex justify-between items-center h-16 px-container_padding z-30">
-      <div class="flex items-center gap-gutter">
-        <!-- Brand block sits in the left strip; the 208px width matches the sidebar
-             (240px) minus the topbar's 32px container_padding, so the right edge of
-             the brand block aligns with the sidebar's right border below it. -->
-        <div class="w-[208px] flex items-baseline gap-2 shrink-0">
-          <h1 class="text-h2 font-h2 font-bold text-primary">ParkEase</h1>
-          <span class="font-body-sm text-body-sm text-on-surface-variant hidden sm:inline">Admin</span>
-        </div>
+    <!-- Pinned across the full viewport width and flush to the top. inset-x-0 +
+         w-full guarantee it spans edge to edge above the sidebar; z-30 keeps it
+         over the sidebar (z-20). The brand block is a fixed 240px column with a
+         right border so it lines up pixel-for-pixel with the sidebar beneath. -->
+    <header class="fixed top-0 inset-x-0 w-full bg-surface border-b border-outline-variant flex items-center h-16 z-30">
+      <!-- Brand column — exactly the sidebar width (240px), bordered to match. -->
+      <div class="w-[240px] shrink-0 h-full flex items-center gap-2 px-stack_lg border-r border-outline-variant">
+        <h1 class="text-h2 font-h2 font-bold text-primary leading-none">ParkEase</h1>
+        <span class="font-body-sm text-body-sm text-on-surface-variant hidden sm:inline">Admin</span>
+      </div>
+
+      <!-- Right region fills the remaining width. -->
+      <div class="flex-1 flex justify-between items-center px-container_padding gap-gutter">
         <div class="relative hidden md:block">
           <pe-icon name="search" [size]="20" class="absolute left-3 top-1/2 -translate-y-1/2 text-outline pointer-events-none" />
           <input
@@ -29,9 +30,8 @@ import { IconComponent } from '../icon/icon.component';
             type="text"
           />
         </div>
-      </div>
 
-      <div class="flex items-center gap-stack_md">
+      <div class="flex items-center gap-stack_md ml-auto">
         <a
           routerLink="/admin/profile"
           class="flex items-center gap-3 cursor-pointer p-1 pr-3 rounded-full hover:bg-surface-container-low transition-colors border-[1.5px] border-outline-variant bg-surface-container-lowest"
@@ -48,6 +48,7 @@ import { IconComponent } from '../icon/icon.component';
         >
           <pe-icon name="logout" [size]="22" />
         </button>
+      </div>
       </div>
     </header>
   `,

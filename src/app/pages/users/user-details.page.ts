@@ -204,7 +204,7 @@ type Tab = 'profile' | 'cars' | 'adverts' | 'bookings';
             } @else {
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-stack_md">
                 @for (c of saleCars(); track c._id) {
-                  <a [routerLink]="['/cars', c._id]" class="bg-surface border border-outline-variant rounded-xl overflow-hidden shadow-card flex hover:border-secondary transition-colors">
+                  <a [routerLink]="['/cars', c._id]" [state]="{ car: c }" class="bg-surface border border-outline-variant rounded-xl overflow-hidden shadow-card flex hover:border-secondary transition-colors">
                     <div class="w-28 h-28 bg-surface-container-lowest shrink-0">
                       <pe-img [src]="c.images?.[0]" alt="" fallback="car" />
                     </div>
@@ -231,7 +231,7 @@ type Tab = 'profile' | 'cars' | 'adverts' | 'bookings';
             } @else {
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-stack_md">
                 @for (c of rentCars(); track c._id) {
-                  <a [routerLink]="['/cars', c._id]" class="bg-surface border border-outline-variant rounded-xl overflow-hidden shadow-card flex hover:border-secondary transition-colors">
+                  <a [routerLink]="['/cars', c._id]" [state]="{ car: c }" class="bg-surface border border-outline-variant rounded-xl overflow-hidden shadow-card flex hover:border-secondary transition-colors">
                     <div class="w-28 h-28 bg-surface-container-lowest shrink-0">
                       <pe-img [src]="c.images?.[0]" alt="" fallback="car" />
                     </div>

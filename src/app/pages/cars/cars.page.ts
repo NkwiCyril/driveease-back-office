@@ -112,7 +112,7 @@ import { ImgComponent } from '../../shared/components/img/img.component';
                   </div>
                 </td>
                 <td class="p-3">
-                  <a [routerLink]="['/cars', car._id]" class="block">
+                  <a [routerLink]="['/cars', car._id]" [state]="{ car }" class="block">
                     <div class="font-h3 text-h3 text-primary hover:text-secondary transition-colors">{{ car.year }} {{ car.make }} {{ car.model }}</div>
                     <div class="text-outline mt-0.5">{{ car.transmission || '—' }} · {{ car.fuelType || 'fuel n/a' }}</div>
                   </a>
@@ -130,7 +130,7 @@ import { ImgComponent } from '../../shared/components/img/img.component';
                 </td>
                 <td class="p-3 text-on-surface-variant">{{ car.createdAt | date:'MMM d, y' }}</td>
                 <td class="p-3 text-right">
-                  <a [routerLink]="['/cars', car._id]" class="p-1 text-outline hover:text-primary transition-colors inline-flex">
+                  <a [routerLink]="['/cars', car._id]" [state]="{ car }" class="p-1 text-outline hover:text-primary transition-colors inline-flex">
                     <pe-icon name="chevron_right" [size]="20" />
                   </a>
                 </td>

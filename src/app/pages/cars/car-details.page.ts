@@ -1,14 +1,12 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit, computed, inject, signal } from '@angular/core';
 import { DatePipe, DecimalPipe } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
-import { ApiService } from '../../core/services/api.service';
 import { CarService } from '../../core/services/car.service';
 import { RatingService } from '../../core/services/rating.service';
 import { UserService } from '../../core/services/user.service';
 import { Car } from '../../core/models/car.model';
 import { User } from '../../core/models/user.model';
 import { RatingSummary } from '../../core/models/rating.model';
-import { ApiResponse } from '../../core/models/api.model';
 import { IconComponent } from '../../shared/components/icon/icon.component';
 import { StatusBadgeComponent, BadgeTone } from '../../shared/components/status-badge/status-badge.component';
 import { DialogComponent } from '../../shared/components/dialog/dialog.component';
@@ -224,7 +222,6 @@ import { ImgComponent } from '../../shared/components/img/img.component';
   `,
 })
 export class CarDetailsPage implements OnInit {
-  private readonly api = inject(ApiService);
   private readonly carService = inject(CarService);
   private readonly ratingService = inject(RatingService);
   private readonly userService = inject(UserService);
@@ -252,11 +249,35 @@ export class CarDetailsPage implements OnInit {
   readonly roundedAvg = computed(() => Math.round(this.ratings()?.average ?? 0));
 
   ngOnInit(): void {
-    this.api.get<ApiResponse<Car>>(`/cars/${this.id}`).subscribe({
+    // The backend has NO `GET /api/cars/:id` route — confirmed against
+    // src/routes/car.route.js and the live Swagger spec at
+    // https://gauragespace.onrender.com/api-docs. So we can't fetch a single
+    // car by id directly.
+    //
+    // Primary path: every link to this page (cars list, user-details car rail,
+    // AI queue) passes the full car object via Angular's router `state`, so
+    // the detail loads instantly with zero API calls.
+    //
+    // Fallback for direct URL access (refresh, bookmark, share link): page
+    // /cars/search with a generous limit and find the car by _id client-side.
+    // This won't cover catalogues larger than `FALLBACK_LIMIT`; the proper fix
+    // is a `GET /cars/:id` endpoint on the backend.
+    const stateCar = (history.state?.car ?? null) as Car | null;
+    if (stateCar && stateCar._id === this.id) {
+      this.car.set(stateCar);
+      this.loadOwner(stateCar);
+      return;
+    }
+    this.fetchById(this.id);
+  }
+
+  private readonly FALLBACK_LIMIT = 200;
+  private fetchById(id: string): void {
+    this.carService.search({ limit: this.FALLBACK_LIMIT, page: 1 }).subscribe({
       next: (res) => {
-        const c = res.data ?? null;
-        this.car.set(c);
-        if (c) this.loadOwner(c);
+        const found = (res.data ?? []).find((c) => c._id === id) ?? null;
+        this.car.set(found);
+        if (found) this.loadOwner(found);
       },
       error: () => this.car.set(null),
     });
